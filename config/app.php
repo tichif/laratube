@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laratube'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Laratube\Providers\AppServiceProvider::class,
+        Laratube\Providers\AuthServiceProvider::class,
+        // Laratube\Providers\BroadcastServiceProvider::class,
+        Laratube\Providers\EventServiceProvider::class,
+        Laratube\Providers\RouteServiceProvider::class,
 
     ],
 
