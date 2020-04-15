@@ -7,6 +7,10 @@ use Illuminate\Support\Str;
 
 class Model extends BaseModel
 {
+
+    // Turn mass assignable OFF
+    protected $guarded = [];
+
     // cancel the default incrementing in authentication by Laravel
     public $incrementing = false;
 

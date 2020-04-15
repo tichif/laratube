@@ -48,4 +48,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // This function allows a relationship between the user and channel models
+    public function channel(){
+        return $this->hasOne(Channel::class);
+    }
 }
