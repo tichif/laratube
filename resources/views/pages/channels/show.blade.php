@@ -36,7 +36,7 @@
                         <p class="mt-3  text-center">{{ $channel->description }}</p>
 
                         <div class="text-center">
-                          <subscribe-button :subscriptions={{ $channel->subscriptions }}  inline-template>
+                          <subscribe-button :subscriptions="{{ $channel->subscriptions }}"  inline-template>
                             <button @click="toggleSubscription"  class="btn btn-danger">Subscribe 7k</button>
                           </subscribe-button>
                         </div>
