@@ -40,6 +40,11 @@ class Channel extends Model implements HasMedia
     // this function allows the correct user to modify his profile
     public function editable(){
         if(!auth()->check()) return false;
-        $this->user_id == auth()->user()->id;
+        return $this->user_id == auth()->user()->id;
+    }
+
+    // this function allows a relationship between channel and subscription model
+    public function subscriptions(){
+        return $this->hasMany(Subscription::class);
     }
 }

@@ -82,5 +82,15 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+        window.Auth = {!! json_encode([
+            'user' => Auth::user()
+        ]) !!}
+
+        window.__auth = function(){
+            return window.Auth.user;
+        }
+    </script>
 </body>
 </html>
