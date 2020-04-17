@@ -32300,6 +32300,13 @@ Vue.component("subscribe-button", {
       "default": function _default() {
         return [];
       }
+    },
+    channel: {
+      type: Object,
+      required: true,
+      "default": function _default() {
+        return {};
+      }
     }
   },
   methods: {
@@ -32307,6 +32314,18 @@ Vue.component("subscribe-button", {
       if (!window.Auth.user) {
         alert("PLease Login to subscribe.");
       }
+    }
+  },
+  computed: {
+    subscribe: function subscribe() {
+      if (!__auth() || this.channel.user_id === __auth().id) return false;
+      return !!this.subscriptions.find(function (subscription) {
+        return subscription.user_id === __auth().id;
+      });
+    },
+    owner: function owner() {
+      if (__auth() && this.channel.user_id === __auth().id) return true;
+      return false;
     }
   }
 });
