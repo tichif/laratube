@@ -33318,17 +33318,37 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-Vue.component('channel-uploads', {
+Vue.component("channel-uploads", {
+  props: {
+    channel: {
+      type: Object,
+      required: true,
+      "default": function _default() {
+        return {};
+      }
+    }
+  },
   data: function data() {
     return {
-      selected: false
+      selected: false,
+      videos: []
     };
   },
   methods: {
     upload: function upload() {
-      this.selected = true;
-      var videos = this.$refs.videos.files;
-      console.log(videos);
+      var _this = this;
+
+      this.selected = true; // convert to an array
+
+      this.videos = Array.from(this.$refs.videos.files);
+      var uploaders = this.videos.map(function (video) {
+        var form = new FormData();
+        form.append("video", video);
+        form.append("title", video.name);
+        return axios.post("/channels/".concat(_this.channel.id, "/videos"), form).then()["catch"](function (err) {
+          return console.log(err);
+        });
+      });
     }
   }
 });

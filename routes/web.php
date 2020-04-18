@@ -21,6 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('channels','ChannelController');
 
-Route::resource('channels/{channel}/subscriptions','SubscriptionsController')->only('store','destroy');
 
-Route::get('channels/{channel}/videos','UploadVideoController@index')->name('channel.upload');
+Route::middleware(['auth'])->group(function(){
+    Route::get('channels/{channel}/videos','UploadVideoController@index')->name('channel.upload');
+    Route::post('channels/{channel}/videos','UploadVideoController@store');
+    Route::resource('channels/{channel}/subscriptions','SubscriptionsController')->only('store','destroy');
+});
