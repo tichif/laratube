@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('channels','ChannelController');
 
 Route::resource('channels/{channel}/subscriptions','SubscriptionsController')->only('store','destroy');
+
+Route::get('channels/{channel}/videos','UploadVideoController@index')->name('channel.upload');
