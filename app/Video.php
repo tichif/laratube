@@ -10,4 +10,9 @@ class Video extends Model
     public function channel(){
         return $this->belongsTo(Channel::class);
     }
+
+    // this function check if the user is signed in and if the user is the owner of the video
+    public function editable(){
+        return auth()->check() && $this->channel->user_id == auth()->user()->id;
+    }
 }

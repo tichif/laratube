@@ -23,6 +23,7 @@ Route::resource('channels','ChannelController');
 Route::get('videos/{video}', 'VideosController@show');
 
 Route::put('videos/{video}','VideosController@updateViews');
+Route::put('videos/{video}/update','VideosController@update')->middleware(['auth'])->name('videos.update');
 
 
 Route::middleware(['auth'])->group(function(){
