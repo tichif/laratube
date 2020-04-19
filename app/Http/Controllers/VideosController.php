@@ -14,4 +14,10 @@ class VideosController extends Controller
 
         return view('pages.videos.show', compact('video'));
     }
+
+    public function updateViews(Video $video){
+        $video->increment('views');
+
+        return response()->json([]);
+    }
 }
