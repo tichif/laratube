@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('channels','ChannelController');
+Route::get('videos/{video}', 'VideosController@show');
 
 
 Route::middleware(['auth'])->group(function(){

@@ -10,7 +10,9 @@ Vue.component("channel-uploads", {
     return {
       selected: false,
       videos: [],
-      progress: {}
+      progress: {},
+      uploads: [],
+      intervals: {}
     };
   },
   methods: {
@@ -36,8 +38,36 @@ Vue.component("channel-uploads", {
               this.$forceUpdate();
             }
           })
-          .then()
+          .then(({ data }) => {
+            this.uploads = [...this.uploads, data];
+          })
           .catch(err => console.log(err));
+      });
+
+      axios.all(uploaders).then(() => {
+        this.videos = this.uploads;
+
+        this.videos.forEach(video => {
+          // make a get request to have a new data from the server
+          this.intervals[video.id] = setInterval(() => {
+            axios
+              .get(`/videos/${video.id}`)
+              .then(({ data }) => {
+                // if the conversion is done, stop the request
+                if (data.percentage === 100) {
+                  clearInterval(this.intervals[video.id]);
+                }
+                // replace the video with the newest coming from the server
+                this.videos = this.videos.map(v => {
+                  if (v.id === data.id) {
+                    return data;
+                  }
+                  return v;
+                });
+              })
+              .catch(err => console.log(err));
+          }, 3000);
+        });
       });
     }
   }

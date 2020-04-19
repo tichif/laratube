@@ -22,7 +22,7 @@ class UploadVideoController extends Controller
 
         $this->dispatch(new CreateVideoThumbnail($video));
 
-        // $this->dispatch(new ConvertForStreaming($video));
+        $this->dispatch(new ConvertForStreaming($video));
 
         return $video ;
     }
