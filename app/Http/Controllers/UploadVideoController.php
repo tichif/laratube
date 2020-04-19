@@ -4,6 +4,7 @@ namespace Laratube\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laratube\Jobs\Videos\ConvertForStreaming;
+use Laratube\Jobs\Videos\CreateVideoThumbnail;
 use Laratube\Channel;
 
 class UploadVideoController extends Controller
@@ -19,7 +20,9 @@ class UploadVideoController extends Controller
             'path' => $request->video->store("channel/{$channel->id}/videos")
         ]);
 
-        $this->dispatch(new ConvertForStreaming($video));
+        $this->dispatch(new CreateVideoThumbnail($video));
+
+        // $this->dispatch(new ConvertForStreaming($video));
 
         return $video ;
     }
