@@ -1,5 +1,14 @@
+<template>
+  <button
+    @click="toggleSubscription"
+    class="btn btn-danger"
+  >{{ owner ? '' : subscribed ? 'Unsubscribe' : 'Subscribe' }} {{ count }} {{ owner ? 'Subscribers' : '' }}</button>
+</template>
+
+
+<script>
 import numeral from "numeral";
-Vue.component("subscribe-button", {
+export default {
   props: {
     initialSubscriptions: {
       type: Array,
@@ -68,4 +77,5 @@ Vue.component("subscribe-button", {
       return numeral(this.subscriptions.length).format("0a");
     }
   }
-});
+};
+</script>
