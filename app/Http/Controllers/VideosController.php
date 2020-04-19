@@ -8,6 +8,10 @@ use Laratube\Video;
 class VideosController extends Controller
 {
     public function show(Video $video){
-        return $video;
+        if(request()->expectsJson()){
+            return $video;
+        }
+
+        return view('pages.videos.show', compact('video'));
     }
 }
