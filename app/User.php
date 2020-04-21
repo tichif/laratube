@@ -53,4 +53,26 @@ class User extends Authenticatable
     public function channel(){
         return $this->hasOne(Channel::class);
     }
+
+    // 
+    public function toggleVote($entity, $type){
+        // check if the user already vote
+        $vote = $entity->votes->where('user_id', $this->id)->first();
+
+        if($vote){
+            // update the vote
+            $vote->update([
+                'type' => $type
+            ]);
+            return $vote->refresh();
+        }else{
+            // create a new vote
+           return  $entity->votes()->create([
+               'type' => $type,
+               'user_id' => $this->id
+           ]);
+        }
+
+        
+    }
 }

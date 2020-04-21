@@ -95,7 +95,13 @@ export default {
       default: () => []
     },
     entity_owner: {
-      required: true
+      required: true,
+      default: ""
+    },
+
+    entity_id: {
+      required: true,
+      default: ""
     }
   },
   data() {
@@ -130,13 +136,38 @@ export default {
   },
   methods: {
     vote(type) {
-      if (__auth() && __auth().id === this.entity_owner) {
+      if (!__auth()) {
+        return alert("Please login.");
+      }
+
+      if (__auth().id === this.entity_owner) {
         return alert("You cannot vote this item.");
       }
 
-      if (type === "up" && this.upVoted()) return;
+      if (type === "up" && this.upVoted) return;
 
-      if (type === "down" && this.downVoted()) return;
+      if (type === "down" && this.downVoted) return;
+
+      axios
+        .post(`/votes/${this.entity_id}/${type}`)
+        .then(({ data }) => {
+          // if the user already vote once
+          // we updated the vote in the frontend
+          if (this.upVoted || this.downVote) {
+            this.votes = this.votes.map(v => {
+              if (v.user_id === __auth().id) {
+                return data;
+              }
+
+              return v;
+            });
+            // else
+            // we add the new vote
+          } else {
+            this.votes = [...this.votes, data];
+          }
+        })
+        .catch(err => console.log(err));
     }
   }
 };
