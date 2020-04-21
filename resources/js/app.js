@@ -7,6 +7,7 @@ Vue.component(
   "subscribe-button",
   require("./components/SubscribeButton.vue").default
 );
+Vue.component("vote", require("./components/Vote.vue").default);
 require("./components/channel-uploads");
 
 const app = new Vue({
