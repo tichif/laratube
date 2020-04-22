@@ -6,6 +6,10 @@ namespace Laratube;
 
 class Comment extends Model
 {
+
+    protected $appends = ['repliesCount'];
+
+    
     // Laravel will load automatically the user who made the comment
     protected $with = ['user'];
 
@@ -28,4 +32,9 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'comment_id')->whereNotNull('comment_id');
     }
+
+    public function getRepliesCountAttribute(){
+        return $this->replies->count();
+    }
+
 }
