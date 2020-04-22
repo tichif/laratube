@@ -12,9 +12,7 @@ class VideosController extends Controller
         if(request()->expectsJson()){
             return $video;
         }
-
-        dd($video->comments->first()->replies);
-
+        
         return view('pages.videos.show', compact('video'));
     }
 

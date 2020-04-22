@@ -6,6 +6,9 @@ namespace Laratube;
 
 class Comment extends Model
 {
+    // Laravel will load automatically the user who made the comment
+    protected $with = ['user'];
+
     // this function allows relationship between comment and video models
     public function video(){
         return $this->belongsTo(Video::class);

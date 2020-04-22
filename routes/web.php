@@ -25,6 +25,8 @@ Route::get('videos/{video}', 'VideosController@show');
 Route::put('videos/{video}','VideosController@updateViews');
 Route::put('videos/{video}/update','VideosController@update')->middleware(['auth'])->name('videos.update');
 
+Route::get('videos/{video}/comments','CommentController@index');
+
 
 Route::middleware(['auth'])->group(function(){
     Route::get('channels/{channel}/videos','UploadVideoController@index')->name('channel.upload');
