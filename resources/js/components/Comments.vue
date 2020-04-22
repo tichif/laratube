@@ -1,8 +1,8 @@
 <template>
   <div class="card mt-5 p-5">
-    <div class="form-inline my-4 w-full">
-      <input type="text" class="form-control form-control-sm w-80" />
-      <button class="btn btn-sm btn-primary">
+    <div v-if="auth" class="form-inline my-4 w-full">
+      <input type="text" v-model="newComment" class="form-control form-control-sm w-80" />
+      <button @click.prevent="addComment" class="btn btn-sm btn-primary">
         <small>Add comment</small>
       </button>
     </div>
@@ -13,11 +13,14 @@
         <h6 class="mt-0">{{ comment.user.name }}</h6>
         <small>{{ comment.body }}</small>
 
-        <vote
-          :default_votes="comment.votes"
-          :entity_owner="comment.user.id"
-          :entity_id="comment.id"
-        ></vote>
+        <div class="d-flex">
+          <vote
+            :default_votes="comment.votes"
+            :entity_owner="comment.user.id"
+            :entity_id="comment.id"
+          ></vote>
+          <button class="btn btn-sm btn-secondary ml-2">Reply</button>
+        </div>
         <replies :comment="comment"></replies>
       </div>
     </div>
@@ -50,7 +53,8 @@ export default {
     return {
       comments: {
         data: []
-      }
+      },
+      newComment: ""
     };
   },
   methods: {
@@ -67,8 +71,27 @@ export default {
           };
         })
         .catch(err => console.log(err));
+    },
+    addComment() {
+      if (!this.newComment) return;
+      axios
+        .post(`/comments/${this.video.id}`, {
+          body: this.newComment
+        })
+        .then(({ data }) => {
+          this.comments = {
+            ...this.comments,
+            data: [data, ...this.comments.data]
+          };
+          this.newComment = "";
+        })
+        .catch(err => console.log(err));
     }
   },
-  computed: {}
+  computed: {
+    auth() {
+      return __auth();
+    }
+  }
 };
 </script>
