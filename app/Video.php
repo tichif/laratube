@@ -20,4 +20,9 @@ class Video extends Model
     public function votes(){
         return $this->morphMany(Vote::class,'voteable');
     }
+
+    // this function allows a relationship between video and comment model
+    public function comments(){
+        return $this->hasMany(Comment::class)->whereNull('comment_id');
+    }
 }

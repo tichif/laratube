@@ -75,4 +75,9 @@ class User extends Authenticatable
 
         
     }
+
+    // this function allows a relationship between video and comment model
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }
