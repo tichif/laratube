@@ -7,13 +7,14 @@
       </button>
     </div>
 
-    <div class="media mt-3" v-for="reply in replies.data" :key="reply.id">
+    <div class="media my-3" v-for="reply in replies.data" :key="reply.id">
       <a class="mr-3" href="#">
         <avatar :username="reply.user.name" :size="30"></avatar>
       </a>
       <div class="media-body">
         <h6 class="mt-0">{{ reply.user.name }}</h6>
         <small>{{ reply.body }}</small>
+        <vote :default_votes="reply.votes" :entity_owner="reply.user.id" :entity_id="reply.id"></vote>
       </div>
     </div>
     <div v-if="comment.repliesCount > 0 && replies.next_page_url" class="text-center">

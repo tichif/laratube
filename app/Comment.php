@@ -6,12 +6,12 @@ namespace Laratube;
 
 class Comment extends Model
 {
-
+    // for accessors
     protected $appends = ['repliesCount'];
 
     
     // Laravel will load automatically the user who made the comment
-    protected $with = ['user'];
+    protected $with = ['user','votes'];
 
     // this function allows relationship between comment and video models
     public function video(){

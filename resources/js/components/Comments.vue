@@ -13,6 +13,11 @@
         <h6 class="mt-0">{{ comment.user.name }}</h6>
         <small>{{ comment.body }}</small>
 
+        <vote
+          :default_votes="comment.votes"
+          :entity_owner="comment.user.id"
+          :entity_id="comment.id"
+        ></vote>
         <replies :comment="comment"></replies>
       </div>
     </div>
