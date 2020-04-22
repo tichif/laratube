@@ -8,6 +8,6 @@ use Laratube\Video;
 class CommentController extends Controller
 {
     public function index(Video $video){
-        return $video->comments()->paginate(5);
+        return $video->comments()->paginate(10);
     }
 }
