@@ -68,6 +68,44 @@
                     @endif
                 </div>
             </div>
+            <div class="card">
+              <div class="card-header">
+                Videos
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Views</th>
+                    <th>Status</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
+                    @foreach ($videos as $i => $video)
+                        <tr>
+                          <td>{{ ++$i}}</td>
+                          <td>
+                            <img width="40px" height="40px" src="{{ $video->thumbnail }}" alt="{{ $video->title }}">
+                          </td>
+                          <td>{{ $video->title }}</td>
+                          <td>{{ $video->views }}</td>
+                          <td>{{ $video->percentage == 100 ? 'Completed' :'Processing'}}</td>
+                          <td>
+                            @if ( $video->percentage == 100)
+                              <a href="{{ url('videos') }}/{{ $video->id }}" target="_blank" class="btn btn-info btn-sm">View</a>
+                            @endif
+                          </td>
+                        </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+                <div class="row justify-content-center">
+                  {{ $videos->links() }}
+                </div>
+              </div>
+            </div>
         </div>
     </div>
 </div>

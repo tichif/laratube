@@ -14,7 +14,7 @@ class UpdateVideoRequest extends FormRequest
      */
     public function authorize()
     {
-        return $video->channel->user_id == auth()->user()->id;
+        return auth()->user()->id === $this->video->channel->user_id;
     }
 
     /**
