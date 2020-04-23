@@ -3,6 +3,8 @@
 namespace Laratube\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laratube\Video;
+use Laratube\Channel;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $query = request()->search;
+
+        $videos = collect();
+
+        $channels = collect();
+
+        if($query){
+            $videos = Video::where('title','LIKE',"%{$query}%")
+                        ->orWhere('description','LIKE',"%{$query}%")
+                        ->paginate(5,['*'],'video_page');
+
+            $channels = Channel::where('name','LIKE',"%{$query}%")
+                            ->orWhere('description','LIKE',"%{$query}%")
+                            ->paginate(5,['*'],'channel_page');
+        }
+
+        return view('home', compact('videos','channels'));
     }
 }
