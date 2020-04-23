@@ -19,13 +19,13 @@
       </div>
 
       <div v-if="addingReply" class="form-inline my-4 w-full">
-        <input type="text" class="form-control form-control-sm w-80" />
-        <button class="btn btn-sm btn-primary">
+        <input v-model="body" type="text" class="form-control form-control-sm w-80" />
+        <button @click.prevent="addReply" class="btn btn-sm btn-primary">
           <small>Add reply</small>
         </button>
       </div>
 
-      <replies :comment="comment"></replies>
+      <replies ref="replies" :comment="comment"></replies>
     </div>
   </div>
 </template>
@@ -39,6 +39,11 @@ export default {
       required: true,
       type: Object,
       default: () => ({})
+    },
+    video: {
+      type: Object,
+      required: true,
+      default: () => ({})
     }
   },
   components: {
@@ -47,8 +52,25 @@ export default {
   },
   data() {
     return {
-      addingReply: false
+      addingReply: false,
+      body: ""
     };
+  },
+  methods: {
+    addReply() {
+      if (!this.body) return;
+      axios
+        .post(`/comments/${this.video.id}`, {
+          body: this.body,
+          comment_id: this.comment.id
+        })
+        .then(({ data }) => {
+          this.$refs.replies.addReply(data);
+          this.body = "";
+          this.addingReply = false
+        })
+        .catch(err => console.log(err));
+    }
   }
 };
 </script>
