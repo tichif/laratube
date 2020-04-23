@@ -7,23 +7,8 @@
       </button>
     </div>
 
-    <div class="media my-3" v-for="comment in comments.data" :key="comment.id">
-      <avatar :username="comment.user.name" :size="30" class="mr-3"></avatar>
-      <div class="media-body">
-        <h6 class="mt-0">{{ comment.user.name }}</h6>
-        <small>{{ comment.body }}</small>
+    <comment v-for="comment in comments.data" :key="comment.id" :comment="comment"></comment>
 
-        <div class="d-flex">
-          <vote
-            :default_votes="comment.votes"
-            :entity_owner="comment.user.id"
-            :entity_id="comment.id"
-          ></vote>
-          <button class="btn btn-sm btn-secondary ml-2">Reply</button>
-        </div>
-        <replies :comment="comment"></replies>
-      </div>
-    </div>
     <div class="text-center">
       <button v-if="comments.next_page_url" @click="fetchComments" class="btn btn-success">Load more</button>
       <span v-else>No more comments</span>
@@ -32,15 +17,13 @@
 </template>
 
 <script>
-import Avatar from "vue-avatar";
-import Replies from "./Replies";
+import Comment from "./Comment";
 export default {
   mounted() {
     this.fetchComments();
   },
   components: {
-    Avatar,
-    Replies
+    Comment
   },
   props: {
     video: {
